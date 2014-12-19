@@ -6,13 +6,13 @@ public class Test : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
-		CollectQuest a = new CollectQuest { title = "a" };
-		CollectQuest b = new CollectQuest { title = "b" };
+		CollectQuestDefinition d = new CollectQuestDefinition();
+
+		CollectQuest a = new CollectQuest(d);
+		CollectQuest b = new CollectQuest(d);
 
 		a.onQuestStart += OnQuestEvent;
-		a.onQuestStop += OnQuestEvent;
 		b.onQuestStart += OnQuestEvent;
-		b.onQuestStop += OnQuestEvent;
 
 		a.Start();
 		a.Cancel();
@@ -22,7 +22,7 @@ public class Test : MonoBehaviour {
 	}
 
 	private static void OnQuestEvent(CollectQuest quest) {
-		Debug.Log(quest.title + " state " + quest.state + " count "+ quest.count);
+		Debug.Log(quest.definition.title + " state " + quest.state + " count "+ quest.count + "/" + quest.definition.count);
 	}
 
 	// Update is called once per frame
