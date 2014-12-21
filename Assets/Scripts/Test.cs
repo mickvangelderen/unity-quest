@@ -6,22 +6,27 @@ public class Test : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
-		CollectQuestDefinition d = new CollectQuestDefinition();
+		// any quest
+		Quest.onQuestStart += OnQuestEvent;
 
-		CollectQuest a = new CollectQuest(d);
-		CollectQuest b = new CollectQuest(d);
+		QuestDefinition d = gameObject.GetComponent<CollectQuestDefinition>();
 
-		a.onQuestStart += OnQuestEvent;
-		b.onQuestStart += OnQuestEvent;
+		Quest a = d.Create();
+		Quest b = d.Create();
+
+		((CollectQuest)a).onQuestStart += OnCollectQuestEvent;
+		((CollectQuest)b).onQuestStart += OnCollectQuestEvent;
 
 		a.Start();
-		a.Cancel();
-
 		b.Start();
-		b.Cancel();
 	}
 
-	private static void OnQuestEvent(CollectQuest quest) {
+	private static void OnQuestEvent(Quest quest) {
+		Debug.Log(quest.definition.title + " state " + quest.state);
+		// Quest.onQuestStart -= OnQuestEvent;
+	}
+
+	private static void OnCollectQuestEvent(CollectQuest quest) {
 		Debug.Log(quest.definition.title + " state " + quest.state + " count "+ quest.count + "/" + quest.definition.count);
 	}
 
