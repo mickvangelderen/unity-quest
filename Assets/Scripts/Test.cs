@@ -18,7 +18,7 @@ public class Test : MonoBehaviour {
 	}
 
 	private static void OnQuestEvent(Quest quest) {
-		Debug.Log(quest.definition.title + " state " + quest.state);
+		Debug.Log(quest.state + ": " + quest.definition.title);
 	}
 
 	// Update is called once per frame
