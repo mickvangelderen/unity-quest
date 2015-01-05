@@ -7,25 +7,19 @@ public class CollectQuest : Quest<CollectQuest, CollectQuestDefinition> {
 
 	public CollectQuest(CollectQuestDefinition definition) : base(definition) {}
 
-	override public void Start() {
-
+	override protected void _Start() {
+		base._Start();
 		Item.onAnyItemCollect += OnAnyItemCollect;
-
-		base.Start();
 	}
 
-	override public void Complete() {
-
+	override protected void _Complete() {
+		base._Complete();
 		Item.onAnyItemCollect -= OnAnyItemCollect;
-
-		base.Complete();
 	}
 
 	private void OnAnyItemCollect(GameObject item, GameObject unit) {
 		if (item.name != definition.objectName) return;
-
 		if (++count >= definition.count) Complete();
-
 	}
 
 

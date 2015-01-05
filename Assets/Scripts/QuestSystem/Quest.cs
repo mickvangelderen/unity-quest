@@ -26,23 +26,59 @@ public class Quest {
 		this._definition = definition;
 	}
 
-	virtual public void Start() {
-		if (state == State.STARTED) return;
+	public void Start() {
+		if (_PreStart() == false) return;
+		_Start();
+		_PostStart();
+	}
+
+	virtual protected bool _PreStart() {
+		return state != State.STARTED;
+	}
+
+	virtual protected void _Start() {
 		state = State.STARTED;
+	}
+
+	virtual protected void _PostStart() {
 		if (Quest.onAnyQuestStart != null) Quest.onAnyQuestStart(this);
 		if (this.onQuestStart != null) this.onQuestStart(this);
 	}
 
-	virtual public void Cancel() {
-		if (state == State.CANCELLED) return;
+	public void Cancel() {
+		if (_PreCancel() == false) return;
+		_Cancel();
+		_PostCancel();
+	}
+
+	virtual protected bool _PreCancel() {
+		return state != State.CANCELLED;
+	}
+
+	virtual protected void _Cancel() {
 		state = State.CANCELLED;
+	}
+
+	virtual protected void _PostCancel() {
 		if (Quest.onAnyQuestCancel != null) Quest.onAnyQuestCancel(this);
 		if (this.onQuestCancel != null) this.onQuestCancel(this);
 	}
 
-	virtual public void Complete() {
-		if (state == State.COMPLETED) return;
+	public void Complete() {
+		if (_PreComplete() == false) return;
+		_Complete();
+		_PostComplete();
+	}
+
+	virtual protected bool _PreComplete() {
+		return state != State.COMPLETED;
+	}
+
+	virtual protected void _Complete() {
 		state = State.COMPLETED;
+	}
+
+	virtual protected void _PostComplete() {
 		if (Quest.onAnyQuestComplete != null) Quest.onAnyQuestComplete(this);
 		if (this.onQuestComplete != null) this.onQuestComplete(this);
 	}

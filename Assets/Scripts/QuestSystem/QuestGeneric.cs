@@ -20,20 +20,20 @@ public abstract class Quest<QuestSC, DefinitionSC> : Quest
 	new public event QuestEvent<QuestSC>.Subscriber onQuestCancel;
 	new public event QuestEvent<QuestSC>.Subscriber onQuestComplete;
 
-	override public void Start() {
-		base.Start();
+	override protected void _PostStart() {
+		base._PostStart();
 		if (Quest<QuestSC, DefinitionSC>.onAnyQuestStart != null) Quest<QuestSC, DefinitionSC>.onAnyQuestStart(this as QuestSC);
 		if (this.onQuestStart != null) this.onQuestStart(this as QuestSC);
 	}
 
-	override public void Cancel() {
-		base.Cancel();
+	override protected void _PostCancel() {
+		base._PostCancel();
 		if (Quest<QuestSC, DefinitionSC>.onAnyQuestCancel != null) Quest<QuestSC, DefinitionSC>.onAnyQuestCancel(this as QuestSC);
 		if (this.onQuestCancel != null) this.onQuestCancel(this as QuestSC);
 	}
 
-	override public void Complete() {
-		base.Complete();
+	override protected void _PostComplete() {
+		base._PostComplete();
 		if (Quest<QuestSC, DefinitionSC>.onAnyQuestComplete != null) Quest<QuestSC, DefinitionSC>.onAnyQuestComplete(this as QuestSC);
 		if (this.onQuestComplete != null) this.onQuestComplete(this as QuestSC);
 	}
