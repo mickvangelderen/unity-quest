@@ -4,10 +4,9 @@ public class Quest {
 
 	// static
 
-	public enum State { CREATED, STARTED, CANCELLED, COMPLETED };
+	public enum State { CREATED, STARTED, COMPLETED };
 
 	static public event QuestEvent<Quest>.Subscriber onAnyQuestStart;
-	static public event QuestEvent<Quest>.Subscriber onAnyQuestCancel;
 	static public event QuestEvent<Quest>.Subscriber onAnyQuestComplete;
 
 	// instance
@@ -17,7 +16,6 @@ public class Quest {
 	public QuestDefinition definition { get { return _definition; } }
 
 	public event QuestEvent<Quest>.Subscriber onQuestStart;
-	public event QuestEvent<Quest>.Subscriber onQuestCancel;
 	public event QuestEvent<Quest>.Subscriber onQuestComplete;
 
 	// methods
@@ -43,25 +41,6 @@ public class Quest {
 	virtual protected void _PostStart() {
 		if (Quest.onAnyQuestStart != null) Quest.onAnyQuestStart(this);
 		if (this.onQuestStart != null) this.onQuestStart(this);
-	}
-
-	public void Cancel() {
-		if (_PreCancel() == false) return;
-		_Cancel();
-		_PostCancel();
-	}
-
-	virtual protected bool _PreCancel() {
-		return state != State.CANCELLED;
-	}
-
-	virtual protected void _Cancel() {
-		state = State.CANCELLED;
-	}
-
-	virtual protected void _PostCancel() {
-		if (Quest.onAnyQuestCancel != null) Quest.onAnyQuestCancel(this);
-		if (this.onQuestCancel != null) this.onQuestCancel(this);
 	}
 
 	public void Complete() {

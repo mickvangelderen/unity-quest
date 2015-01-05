@@ -13,23 +13,15 @@ public abstract class Quest<QuestSC, DefinitionSC> : Quest
 	// events
 
 	new static public event QuestEvent<QuestSC>.Subscriber onAnyQuestStart;
-	new static public event QuestEvent<QuestSC>.Subscriber onAnyQuestCancel;
 	new static public event QuestEvent<QuestSC>.Subscriber onAnyQuestComplete;
 
 	new public event QuestEvent<QuestSC>.Subscriber onQuestStart;
-	new public event QuestEvent<QuestSC>.Subscriber onQuestCancel;
 	new public event QuestEvent<QuestSC>.Subscriber onQuestComplete;
 
 	override protected void _PostStart() {
 		base._PostStart();
 		if (Quest<QuestSC, DefinitionSC>.onAnyQuestStart != null) Quest<QuestSC, DefinitionSC>.onAnyQuestStart(this as QuestSC);
 		if (this.onQuestStart != null) this.onQuestStart(this as QuestSC);
-	}
-
-	override protected void _PostCancel() {
-		base._PostCancel();
-		if (Quest<QuestSC, DefinitionSC>.onAnyQuestCancel != null) Quest<QuestSC, DefinitionSC>.onAnyQuestCancel(this as QuestSC);
-		if (this.onQuestCancel != null) this.onQuestCancel(this as QuestSC);
 	}
 
 	override protected void _PostComplete() {
